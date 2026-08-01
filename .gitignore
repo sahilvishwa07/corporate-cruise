@@ -18,7 +18,7 @@ lerna-debug.log*
 # Build output
 dist/
 dist-ssr/
-client/build/
+build/
 
 # OS files
 .DS_Store
