@@ -33,10 +33,10 @@ function LoginPage() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>Email</label>
           <input
             type="email"
@@ -45,7 +45,7 @@ function LoginPage() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password</label>
           <input
             type="password"
@@ -54,7 +54,7 @@ function LoginPage() {
             required
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="error-text">{error}</p>}
         <button type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>

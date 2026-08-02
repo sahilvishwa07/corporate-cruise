@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
+import { useAuth } from "../context/AuthContext";
 
-// TODO: Replace with a real company-selection flow later.
-// This is your seeded "Acme Corp" company _id from Atlas.
 const TEMP_COMPANY_ID = "6a6b1765a2bc0e0c83431751";
 
 function RegisterPage() {
@@ -14,6 +13,7 @@ function RegisterPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ function RegisterPage() {
         password,
         companyId: TEMP_COMPANY_ID,
       });
-      localStorage.setItem("token", response.data.token);
+      login(response.data.token, response.data.user);
       navigate("/");
     } catch (err) {
       setError(
@@ -40,10 +40,10 @@ function RegisterPage() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
           <label>First Name</label>
           <input
             type="text"
@@ -52,7 +52,7 @@ function RegisterPage() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Last Name</label>
           <input
             type="text"
@@ -61,7 +61,7 @@ function RegisterPage() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Email</label>
           <input
             type="email"
@@ -70,7 +70,7 @@ function RegisterPage() {
             required
           />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password</label>
           <input
             type="password"
@@ -80,7 +80,7 @@ function RegisterPage() {
             minLength={8}
           />
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
+        {error && <p className="error-text">{error}</p>}
         <button type="submit" disabled={loading}>
           {loading ? "Registering..." : "Register"}
         </button>
